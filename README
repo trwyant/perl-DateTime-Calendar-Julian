@@ -1,5 +1,5 @@
-DateTime/Calendar/Julian version 0.01
-=====================================
+DateTime/Calendar/Julian
+========================
 
 This is a companion module to DateTime.pm. It implements the Julian
 calendar. It supports everything that DateTime.pm supports and more:

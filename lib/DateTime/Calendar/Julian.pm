@@ -2,12 +2,12 @@ package DateTime::Calendar::Julian;
 
 use strict;
 
-use vars qw($VERSION);
+use vars qw($VERSION @ISA);
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 
-use DateTime 0.07;
-@DateTime::Calendar::Julian::ISA = 'DateTime';
+use DateTime 0.08;
+@ISA = 'DateTime';
 
 use Params::Validate qw( validate SCALAR BOOLEAN OBJECT );
 
@@ -37,10 +37,9 @@ sub _is_leap_year {
 sub _ymd2rd {
     my ($self, $y, $m, $d) = @_;
 
-    if ($m <= 2) {
-        $m += 12;
-        $y--;
-    }
+    my $adj = _floor( ($m-3)/12 );
+    $m -= 12 * $adj;
+    $y += $adj;
 
     my $rd = $d + $start_of_month[$m-3] + 365*$y + _floor($y/4) - 308;
     return $rd;
@@ -67,11 +66,6 @@ sub _rd2ymd {
     return $y, $m, $d;
 }
 
-# Aliases provided for compatibility with DateTime; if DateTime switches
-# over to _ymd2rd and _rd2ymd, these will be removed eventually.
-*_greg2rd = \&_ymd2rd;
-*_rd2greg = \&_rd2ymd;
-
 sub epoch {
     my $self = shift;
 
@@ -86,31 +80,13 @@ sub from_epoch {
     return $class->from_object( object => $greg );
 }
 
-# Grrr. Compare with DateTime::last_day_of_month and weep.
-my @MonthLengths =
-    ( 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );
-my @LeapYearMonthLengths = @MonthLengths;
-$LeapYearMonthLengths[1]++;
+sub gregorian_deviation {
+    my $self = shift;
 
-sub last_day_of_month {
-    my $class = shift;
-    my %p = validate( @_,
-                      { year   => { type => SCALAR },
-                        month  => { type => SCALAR },
-                        hour   => { type => SCALAR, optional => 1 },
-                        minute => { type => SCALAR, optional => 1 },
-                        second => { type => SCALAR, optional => 1 },
-                        language  => { type => SCALAR | OBJECT, optional => 1 },
-                        time_zone => { type => SCALAR | OBJECT, optional => 1 },
-                      }
-                    );
+    my $year = $self->{local_c}{year};
+    $year-- if $self->{local_c}{month} <= 2;
 
-    my $day = ( $class->_is_leap_year( $p{year} ) ?
-                $LeapYearMonthLengths[ $p{month} - 1 ] :
-                $MonthLengths[ $p{month} - 1 ]
-              );
-
-    return $class->new( %p, day => $day );
+    return _floor($year/100)-_floor($year/400)-2;
 }
 
 1;
@@ -143,6 +119,20 @@ DateTime::Calendar::Julian - Dates in the Julian calendar
 DateTime::Calendar::Julian implements the Julian Calendar.  This module
 implements all methods of DateTime; see the DateTime(3) manpage for all
 methods.
+
+=head1 METHODS
+
+This module implements one additional method besides the ones from
+DateTime.
+
+=over 4
+
+=item * gregorian_deviation
+
+Returns the difference in days between the Gregorian and the Julian
+calendar.
+
+=back
 
 =head1 BACKGROUND
 
@@ -185,5 +175,7 @@ the same terms as Perl itself.
 L<DateTime>
 
 datetime@perl.org mailing list
+
+http://datetime.perl.org/
 
 =cut

@@ -1,6 +1,7 @@
 Changes
-Julian.pm
+LICENSE
 Makefile.PL
 MANIFEST
 README
+lib/DateTime/Calendar/Julian.pm
 t/1.t
