@@ -3,7 +3,7 @@
 
 #########################
 
-use Test::More tests => 21;
+use Test::More tests => 23;
 BEGIN { use_ok('DateTime::Calendar::Julian') };
 
 #########################
@@ -17,15 +17,16 @@ use DateTime;
 foreach $date (
                 [ '1582/10/05', '1582/10/15' ], # Jul => Greg reform date
                 [ '1752/09/03', '1752/09/14' ], # English reform date
+                [ '1900/02/29', '1900/03/13' ], # Julian leap year
                 [ '1918/02/01', '1918/02/14' ], # Russian reform date
                 [ '0000/01/03', '0000/01/01' ], # 1 BC
-                ['-4712/01/01','-4713/11/24' ], # Julian Day 1
+                ['-4712/01/01','-4713/11/24' ], # Julian Day 0
               ) {
-    my ($y, $m, $d) = split '/', $date->[0];
+    my ($y, $m, $day) = split '/', $date->[0];
     # time_zone to work around a bug(?) in early DateTime versions
     my $d = DateTime::Calendar::Julian->new(year      => $y,
                                             month     => $m,
-                                            day       => $d,
+                                            day       => $day,
                                             time_zone => 'floating' );
     my $dt = DateTime->from_object( object => $d );
     is($dt->ymd('/'), $date->[1], "converting $date->[0] to Gregorian");
@@ -35,7 +36,7 @@ foreach $date (
 }
 
 $d = DateTime::Calendar::Julian->new(year => 2003);
-ok(not($d->is_leap_year), 'non-leap year');
+ok(!($d->is_leap_year), 'non-leap year');
 
 $d = DateTime::Calendar::Julian->new(year => 2004);
 ok($d->is_leap_year, 'ordinary leap year');

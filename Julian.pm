@@ -4,17 +4,26 @@ use strict;
 
 use vars qw($VERSION);
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use DateTime 0.07;
 @DateTime::Calendar::Julian::ISA = 'DateTime';
 
-use POSIX qw( floor );
 use Params::Validate qw( validate SCALAR BOOLEAN OBJECT );
+
+sub _floor {
+    my $x  = shift;
+    my $ix = int $x;
+    if ($ix <= $x) {
+        return $ix;
+    } else {
+        return $ix - 1;
+    }
+}
 
 my @start_of_month = (0, 31, 61, 92, 122, 153, 184, 214, 245, 275, 306, 337);
 
-# Julian dates are formed in exactly the same way as Gregorian dates,
+# Julian dates are formatted in exactly the same way as Gregorian dates,
 # so we use most of the DateTime methods.
 
 # This is the difference between Julian and Gregorian calendar:
@@ -24,10 +33,8 @@ sub _is_leap_year {
     return ($year % 4 == 0);
 }
 
-# These functions should probably be called _jul2rd and _rd2jul, but
-# then we couldn't use a lot of functions from DateTime verbatim.
 # Algorithms from http://home.capecod.net/~pbaum/date/date0.htm
-sub _greg2rd {
+sub _ymd2rd {
     my ($self, $y, $m, $d) = @_;
 
     if ($m <= 2) {
@@ -35,16 +42,16 @@ sub _greg2rd {
         $y--;
     }
 
-    my $rd = $d + $start_of_month[$m-3] + 365*$y + floor($y/4) - 308;
+    my $rd = $d + $start_of_month[$m-3] + 365*$y + _floor($y/4) - 308;
     return $rd;
 }
 
-sub _rd2greg {
+sub _rd2ymd {
     my ($self, $rd, $extra) = @_;
 
     my $z = $rd + 308;
-    my $y = floor(($z*100-25)/36525);
-    my $doy = $z - floor(365.25*$y);
+    my $y = _floor(($z*100-25)/36525);
+    my $doy = $z - _floor(365.25*$y);
     my $m = int((5*$doy + 456)/153);
     my $d = $doy - $start_of_month[$m-3];
     if ($m > 12) {
@@ -59,6 +66,11 @@ sub _rd2greg {
     }
     return $y, $m, $d;
 }
+
+# Aliases provided for compatibility with DateTime; if DateTime switches
+# over to _ymd2rd and _rd2ymd, these will be removed eventually.
+*_greg2rd = \&_ymd2rd;
+*_rd2greg = \&_rd2ymd;
 
 sub epoch {
     my $self = shift;
@@ -120,11 +132,11 @@ DateTime::Calendar::Julian - Dates in the Julian calendar
 
   # convert Julian->Gregorian...
 
-  $dtgreg = DateTime->from_object( $dt );
+  $dtgreg = DateTime->from_object( object => $dt );
 
   # ... and back again
 
-  $dtjul = DateTime::Calendar::Julian->from_object( $dtgreg );
+  $dtjul = DateTime::Calendar::Julian->from_object( object => $dtgreg );
 
 =head1 DESCRIPTION
 

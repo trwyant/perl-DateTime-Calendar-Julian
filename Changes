@@ -1,5 +1,20 @@
 Revision history for Perl extension DateTime::Calendar::Julian.
 
+0.02  2003-02-16
+    - replaced POSIX::floor with a homegrown version
+
+    - renamed _greg2rd and _rd2greg to _ymd2rd and _rd2ymd, in
+      anticipation of a possible change in DateTime. The old names will
+      still be available for a while for backward compatibility.
+
+    - corrected the POD documentation on from_object (reported by Dave
+      Rolsky)
+
+    - removed some bugs in the test script (patch by Tatsuhiko Miyagawa)
+
+    - perhaps most importantly, changed comment in t/1.t: -4712/1/1 is
+      not JD 1, but JD 0
+
 0.01  2003-02-14
 	- original version; the methods that are inherited from DateTime are
 	  not well tested yet
