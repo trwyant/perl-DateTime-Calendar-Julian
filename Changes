@@ -1,5 +1,13 @@
 Revision history for Perl extension DateTime::Calendar::Julian.
 
+0.04  2003-03-13
+    - changed output of datetime() to 2000-01-01J00:00:00, to be
+      different from Gregorian dates.
+
+    - removed bug in day_of_year calculation
+
+    - removed "use Params::Validate", which was superfluous after v0.03
+
 0.03  2003-03-08
     - removed a bug: adding years now works correctly
 

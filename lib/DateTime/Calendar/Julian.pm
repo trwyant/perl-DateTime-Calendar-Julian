@@ -4,12 +4,10 @@ use strict;
 
 use vars qw($VERSION @ISA);
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 use DateTime 0.08;
 @ISA = 'DateTime';
-
-use Params::Validate qw( validate SCALAR BOOLEAN OBJECT );
 
 sub _floor {
     my $x  = shift;
@@ -50,9 +48,9 @@ sub _rd2ymd {
 
     my $z = $rd + 308;
     my $y = _floor(($z*100-25)/36525);
-    my $doy = $z - _floor(365.25*$y);
-    my $m = int((5*$doy + 456)/153);
-    my $d = $doy - $start_of_month[$m-3];
+    my $c = $z - _floor(365.25*$y);
+    my $m = int((5*$c + 456)/153);
+    my $d = $c - $start_of_month[$m-3];
     if ($m > 12) {
         $m -= 12;
         $y++;
@@ -60,6 +58,8 @@ sub _rd2ymd {
 
     if ($extra) {
         # day_of_week, day_of_year
+        my $doy = ($c + 31 + 28 - 1)%365 + 1 +
+                      ($self->_is_leap_year($y) && $m > 2);
         my $dow = (($rd + 6)%7) + 1;
         return $y, $m, $d, $dow, $doy;
     }
@@ -89,6 +89,12 @@ sub gregorian_deviation {
     return _floor($year/100)-_floor($year/400)-2;
 }
 
+sub datetime {
+    my $self = shift;
+
+    return join 'J', $self->ymd, $self->hms(':');
+}
+
 1;
 
 __END__
@@ -109,10 +115,12 @@ DateTime::Calendar::Julian - Dates in the Julian calendar
   # convert Julian->Gregorian...
 
   $dtgreg = DateTime->from_object( object => $dt );
+  print $dtgreg->datetime;  # prints '0964-10-21T00:00:00'
 
   # ... and back again
 
   $dtjul = DateTime::Calendar::Julian->from_object( object => $dtgreg );
+  print $dtjul->datetime;  # prints '0964-10-16J00:00:00'
 
 =head1 DESCRIPTION
 
@@ -123,7 +131,7 @@ methods.
 =head1 METHODS
 
 This module implements one additional method besides the ones from
-DateTime.
+DateTime, and changes the output of one other method.
 
 =over 4
 
@@ -131,6 +139,12 @@ DateTime.
 
 Returns the difference in days between the Gregorian and the Julian
 calendar.
+
+=item * datetime
+
+This method is now equivalent to:
+
+  $dt->ymd('-') . 'J' . $dt->hms(:)
 
 =back
 

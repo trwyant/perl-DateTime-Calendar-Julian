@@ -3,6 +3,8 @@
 
 #########################
 
+BEGIN { $^W = 1 }
+
 use Test::More tests => 30;
 BEGIN { use_ok('DateTime::Calendar::Julian') };
 
@@ -57,7 +59,7 @@ $d = DateTime::Calendar::Julian->last_day_of_month( year => 1900, month => 2, ti
 is($d->ymd, '1900-02-29', 'leap day 1900 is last of the month');
 
 SKIP: {
-    skip 'not UNIX', 2 unless gmtime(0) eq 'Thu Jan  1 00:00:00 1970';
+    skip 'epoch not UNIX', 2 unless gmtime(0) eq 'Thu Jan  1 00:00:00 1970';
     $d = DateTime::Calendar::Julian->from_epoch( epoch => 0 );
     is( $d->epoch, 0, 'epoch 0' );
     is( $d->ymd, '1969-12-19', 'epoch is correct' );
