@@ -1,0 +1,5 @@
+Revision history for Perl extension DateTime::Calendar::Julian.
+
+0.01  2003-02-14
+	- original version; the methods that are inherited from DateTime are
+	  not well tested yet
