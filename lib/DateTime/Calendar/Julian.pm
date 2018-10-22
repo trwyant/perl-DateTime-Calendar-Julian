@@ -1,6 +1,7 @@
 package DateTime::Calendar::Julian;
 
 use strict;
+use warnings;
 
 use vars qw($VERSION @ISA);
 
@@ -26,14 +27,14 @@ my @start_of_month = (0, 31, 61, 92, 122, 153, 184, 214, 245, 275, 306, 337);
 
 # This is the difference between Julian and Gregorian calendar:
 sub _is_leap_year {
-    my ($self, $year) = @_;
+    my (undef, $year) = @_;	# Invocant unused
 
     return ($year % 4 == 0);
 }
 
 # Algorithms from http://home.capecod.net/~pbaum/date/date0.htm
-sub _ymd2rd {
-    my ($self, $y, $m, $d) = @_;
+sub _ymd2rd {	## no critic (ProhibitUnusedPrivateSubroutines)
+    my (undef, $y, $m, $d) = @_;	# Invocant unused
 
     my $adj = _floor( ($m-3)/12 );
     $m -= 12 * $adj;
@@ -43,7 +44,7 @@ sub _ymd2rd {
     return $rd;
 }
 
-sub _rd2ymd {
+sub _rd2ymd {	## no critic (ProhibitUnusedPrivateSubroutines)
     my ($self, $rd, $extra) = @_;
 
     my $z = $rd + 308;
@@ -193,3 +194,5 @@ datetime@perl.org mailing list
 http://datetime.perl.org/
 
 =cut
+
+# ex: set textwidth=72 :
