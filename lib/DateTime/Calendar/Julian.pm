@@ -175,23 +175,36 @@ year 1BC (there was no year 0AD!), -1 the year 2BC, etc.
 Support for this module is provided via the datetime@perl.org email
 list. See http://lists.perl.org/ for more details.
 
+Bug reports will be accepted as RT tickets or by mail to Wyant.
+
 =head1 AUTHOR
 
 Eugene van der Pijll <pijll@gmx.net>
 
-=head1 COPYRIGHT
+Thomas R. Wyant, III F<wyant at cpan dot org>
 
-Copyright (c) 2003 Eugene van der Pijll.  All rights reserved.  This
-program is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (c) 2003 Eugene van der Pijll.  All rights reserved.
+
+Copyright (C) 2018 Thomas R. Wyant, III
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+This program is distributed in the hope that it will be useful, but
+without any warranty; without even the implied warranty of
+merchantability or fitness for a particular purpose.
 
 =head1 SEE ALSO
 
-L<DateTime>
+L<DateTime|/DateTime>
+
+L<DateTime::Calendar::Christian|DateTime::Calendar::Christian>
 
 datetime@perl.org mailing list
 
-http://datetime.perl.org/
+L<http://datetime.perl.org/>
 
 =cut
 
