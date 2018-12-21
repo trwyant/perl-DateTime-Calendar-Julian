@@ -3,6 +3,8 @@ lib/DateTime/Calendar/Julian.pm
 LICENSE
 Makefile.PL
 MANIFEST
+META.yml
+META.json
 README
 t/1.t
 t/4doy.t
