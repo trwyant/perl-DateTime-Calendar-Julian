@@ -198,7 +198,7 @@ merchantability or fitness for a particular purpose.
 
 =head1 SEE ALSO
 
-L<DateTime|/DateTime>
+L<DateTime|DateTime>
 
 L<DateTime::Calendar::Christian|DateTime::Calendar::Christian>
 
