@@ -35,9 +35,9 @@ foreach my $date (
                                             minute    => 0,    # datetime()
                                             second    => 0,    # test
                                             time_zone => 'floating' );
-    my $str = sprintf( '%04d-%02d-%02dJ00:00:00', $y, $m, $day );
-    is( $d->datetime(), $str, "datetime() of $date->[0]" );
-    is( "$d", $str, "stringification of $date->[0]" );
+    my $str = sprintf( '%04d-%02d-%02d', $y, $m, $day );
+    is( $d->datetime(), "${str}J00:00:00", "datetime() of $date->[0]" );
+    is( "$d", "${str}T00:00:00", "stringification of $date->[0]" );
     my $dt = DateTime->from_object( object => $d );
     is($dt->ymd('/'), $date->[1], "converting $date->[0] to Gregorian");
     $d = DateTime::Calendar::Julian->from_object( object => $dt );
