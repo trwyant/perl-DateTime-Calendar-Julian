@@ -188,10 +188,12 @@ year 1BC (there was no year 0AD!), -1 the year 2BC, etc.
 
 =head1 SUPPORT
 
-Support for this module is provided via the datetime@perl.org email
-list. See http://lists.perl.org/ for more details.
+Support for this module is provided via the F<datetime@perl.org> email
+list. See L<https://lists.perl.org/> for more details.
 
-Bug reports will be accepted as RT tickets or by mail to Wyant.
+Please report bugs to
+L<https://github.com/trwyant/perl-DateTime-Calendar-Julian/issues>, or
+in electronic mail to F<wyant@cpan.org>.
 
 =head1 AUTHOR
 
