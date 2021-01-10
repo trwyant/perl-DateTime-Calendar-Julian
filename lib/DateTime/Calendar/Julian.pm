@@ -5,7 +5,7 @@ use warnings;
 
 use vars qw($VERSION @ISA);
 
-$VERSION = '0.102_01';
+$VERSION = '0.103';
 
 use DateTime 0.08;
 @ISA = 'DateTime';
