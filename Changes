@@ -1,4 +1,4 @@
-0.104_01	2021-08-29	T. R. Wyant
+0.105		2021-09-05	T. R. Wyant
     Correct generation of 'provides' metadata.  Thanks to Favio Poletti
     for blogging
     https://github.polettix.it/ETOOBUSY/2021/06/15/the-real-pause-workaround/,
