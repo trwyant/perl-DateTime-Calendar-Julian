@@ -178,6 +178,9 @@ installed.
 
 =back
 
+B<Note> that as of version C<0.106_01>, methods related to quarters
+should work.
+
 =head1 BACKGROUND
 
 The Julian calendar was introduced by Julius Caesar in 46BC.  It
