@@ -44,27 +44,40 @@ sub _ymd2rd {	## no critic (ProhibitUnusedPrivateSubroutines)
     return $rd;
 }
 
-sub _rd2ymd {	## no critic (ProhibitUnusedPrivateSubroutines)
-    my ($self, $rd, $extra) = @_;
+{
+    my @QuarterStart = my @LeapYearQuarterStart = ( 0, 90, 181, 273 );
+    $LeapYearQuarterStart[$_] += 1 for 1 .. 3;
 
-    my $z = $rd + 308;
-    my $y = _floor(($z*100-25)/36525);
-    my $c = $z - _floor(365.25*$y);
-    my $m = int((5*$c + 456)/153);
-    my $d = $c - $start_of_month[$m-3];
-    if ($m > 12) {
-        $m -= 12;
-        $y++;
-    }
+    sub _rd2ymd {	## no critic (ProhibitUnusedPrivateSubroutines)
+	my ($class, $rd, $extra) = @_;
 
-    if ($extra) {
-        # day_of_week, day_of_year
-        my $doy = ($c + 31 + 28 - 1)%365 + 1 +
-                      ($self->_is_leap_year($y) && $m > 2);
-        my $dow = (($rd + 6)%7) + 1;
-        return $y, $m, $d, $dow, $doy;
+	my $z = $rd + 308;
+	my $y = _floor(($z*100-25)/36525);
+	my $c = $z - _floor(365.25*$y);
+	my $m = int((5*$c + 456)/153);
+	my $d = $c - $start_of_month[$m-3];
+	if ($m > 12) {
+	    $m -= 12;
+	    $y++;
+	}
+
+	if ($extra) {
+	    # day_of_week, day_of_year
+	    my $doy = ($c + 31 + 28 - 1)%365 + 1 +
+			  ($class->_is_leap_year($y) && $m > 2);
+	    my $dow = (($rd + 6)%7) + 1;
+
+	    # quarter -- see DateTime::PP->rd2ymd()
+	    my $quarter = int( ( 1 / 3.1 ) * $m ) + 1;
+
+	    my $doq = $doy - ( $class->_is_leap_year( $y ) ?
+		$LeapYearQuarterStart[ $quarter - 1 ] :
+		$QuarterStart[ $quarter - 1 ] );
+
+	    return $y, $m, $d, $dow, $doy, $quarter, $doq;
+	}
+	return $y, $m, $d;
     }
-    return $y, $m, $d;
 }
 
 sub epoch {
