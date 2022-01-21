@@ -1,3 +1,10 @@
+0.106_02	2022-01-21	T. R. Wyant
+    Require DateTime 1.47 for is_last_day_of_quarter().  This is a
+    significant bump, since the previous was 0.08.
+
+    Update Perl requirement in metadata to 5.008004.  It was always this
+    in fact, since DateTime requires this, as does Makefile.PL.
+
 0.106_01	2022-01-20	T. R. Wyant
     Add support for quarters.
 
