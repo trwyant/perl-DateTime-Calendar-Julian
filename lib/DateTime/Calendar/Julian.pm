@@ -80,6 +80,10 @@ sub _ymd2rd {	## no critic (ProhibitUnusedPrivateSubroutines)
     }
 }
 
+sub calendar_name {
+    return 'Julian';
+}
+
 sub epoch {
     my $self = shift;
 
@@ -151,6 +155,10 @@ This module implements one additional method besides the ones from
 DateTime, and changes the output of one other method.
 
 =over 4
+
+=item * calendar_name
+
+Returns C<'Julian'>.
 
 =item * gregorian_deviation
 
