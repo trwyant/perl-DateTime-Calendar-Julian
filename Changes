@@ -1,3 +1,6 @@
+0.106_04	2022-01-22	T. R. Wyant
+    Add method calendar_name(), which returns 'Julian'.
+
 0.106_03	2022-01-21	T. R. Wyant
     Bump DateTime requirement to 1.48 over optional module issue.
 
