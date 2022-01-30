@@ -1,17 +1,12 @@
-0.106_04	2022-01-22	T. R. Wyant
+0.107		2022-01-30	T. R. Wyant
     Add method calendar_name(), which returns 'Julian'.
 
-0.106_03	2022-01-21	T. R. Wyant
-    Bump DateTime requirement to 1.48 over optional module issue.
-
-0.106_02	2022-01-21	T. R. Wyant
-    Require DateTime 1.47 for is_last_day_of_quarter().  This is a
+    Require DateTime 1.48 for is_last_day_of_quarter().  This is a
     significant bump, since the previous was 0.08.
 
     Update Perl requirement in metadata to 5.008004.  It was always this
     in fact, since DateTime requires this, as does Makefile.PL.
 
-0.106_01	2022-01-20	T. R. Wyant
     Add support for quarters.
 
 0.106		2021-09-25	T. R. Wyant
