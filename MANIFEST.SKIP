@@ -19,5 +19,4 @@
 \.svn/
 \.swp$
 \.tar\.gz$
-^\.travis\.yml$
 ^TODO$
