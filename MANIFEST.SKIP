@@ -6,7 +6,9 @@
 ^cover_db/
 ^DateTime-Calendar-Julian
 ^foo
-^\.git
+^.git/
+^.github/
+^.gitignore$
 ^html/
 ^Makefile$
 ^MANIFEST\.
