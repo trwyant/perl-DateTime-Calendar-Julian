@@ -216,9 +216,8 @@ Support for this module is provided via the F<datetime@perl.org> email
 list. See L<https://lists.perl.org/> for more details.
 
 Please report bugs to
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=DateTime-Calendar-Julian>,
-L<https://github.com/trwyant/perl-DateTime-Calendar-Julian/issues>, or
-in electronic mail to F<harryfmudd@comcast.net>.
+L<https://github.com/trwyant/perl-DateTime-Calendar-Julian/issues> or in
+electronic mail to F<harryfmudd@comcast.net>.
 
 =head1 AUTHOR
 
